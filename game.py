@@ -24,12 +24,22 @@ def draw():
     for i in range(1, 101):
         row = (i-1) // 10
         col = (i-1) % 10
-        x = col * 70
-        y = (9-row) * 70
-        if (row + col) % 2 == 0:
-            pygame.draw.rect(screen, (240, 240, 220), (x, y, 70, 70))
+
+        if row%2 == 0: #changed x coordinate , y coordinate won't change 
+            x = col*70
         else:
-            pygame.draw.rect(screen, (200, 220, 240), (x, y, 70, 70))
+            x = (9-col)*70
+        y = (9-row) * 70
+        if row%2 == 0:
+            if (row + col) % 2 == 0:
+                pygame.draw.rect(screen, (240, 240, 220), (x, y, 70, 70))
+            else:
+                pygame.draw.rect(screen, (200, 220, 240), (x, y, 70, 70))
+        else:
+            if (row + col) % 2 == 0:
+                pygame.draw.rect(screen, (200, 220, 240), (x, y, 70, 70))
+            else:
+                pygame.draw.rect(screen, (240, 240, 220), (x, y, 70, 70))
         pygame.draw.rect(screen, (100, 100, 100), (x, y, 70, 70), 1)
         txt = font.render(str(i), True, (0, 0, 0))
         screen.blit(txt, (x+5, y+5))
@@ -38,12 +48,19 @@ def draw():
     for start, end in ladders.items():
         r1 = (start-1) // 10
         c1 = (start-1) % 10
-        x1 = c1*70+35
+
+        if r1%2==0:
+            x1 = c1*70+35
+        else:
+            x1 = (9-c1)*70+35    
         y1 = (9-r1)*70+35
         
         r2 = (end-1) // 10
         c2 = (end-1) % 10
-        x2 = c2*70+35
+        if r2%2 == 0:
+            x2 = c2 * 70 + 35
+        else:
+            x2 = (9 - c2) * 70 + 35
         y2 = (9-r2)*70+35
         
         pygame.draw.line(screen, (0, 150, 0), (x1, y1), (x2, y2), 5)
@@ -52,26 +69,37 @@ def draw():
     for start, end in snakes.items():
         r1 = (start-1) // 10
         c1 = (start-1) % 10
-        x1 = c1*70+35
+        if r1%2==0:
+            x1 = c1*70+35
+        else:
+            x1 = (9-c1)*70+35
         y1 = (9-r1)*70+35
         
         r2 = (end-1) // 10
         c2 = (end-1) % 10
-        x2 = c2*70+35
+        if r2%2==0:
+            x2 = c2 * 70 + 35
+        else:
+            x2 = (9 - c2) * 70 + 35
         y2 = (9-r2)*70+35
         
         pygame.draw.line(screen, (200, 0, 0), (x1, y1), (x2, y2), 5)
-        pygame.draw.circle(screen, (200, 0, 0), (x2, y2), 8)
+        pygame.draw.circle(screen, (200, 0, 0), (x1, y1), 8)
     
     # Players
     r1 = (p1-1) // 10
     c1 = (p1-1) % 10
-    pygame.draw.circle(screen, RED, (c1*70+25, (9-r1)*70+35), 12)
-    
+    if r1%2==0:
+        pygame.draw.circle(screen, RED, (c1*70+25, (9-r1)*70+35), 12)
+    else:
+        pygame.draw.circle(screen, RED, ((9-c1)*70+25, (9-r1)*70+35), 12)
+
     r2 = (p2-1) // 10
     c2 = (p2-1) % 10
-    pygame.draw.circle(screen, BLUE, (c2*70+45, (9-r2)*70+35), 12)
-    
+    if r2%2==0:
+        pygame.draw.circle(screen, BLUE, (c2*70+45, (9-r2)*70+35), 12)
+    else:
+        pygame.draw.circle(screen, BLUE, ((9-c2)*70+45, (9-r2)*70+35), 12)
     pygame.draw.rect(screen, (100, 100, 120), (0, 700, 700, 120))
     
     if won == 0:
